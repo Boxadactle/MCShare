@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "mcshare",
+  "version": "${version}",
+
+  "name": "MCShare",
+  "description": "A mod for, you guessed it!, sharing Minecraft worlds!",
+  "authors": [ "Boxadactle" ],
+  "contact": {},
+
+  "license": "MIT",
+  "icon": "icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.boxadactle.mcshare.fabric.MCShareFabric"
+    ]
+  },
+  "mixins": [
+    "mcshare-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14",
+    "minecraft": ">=1.20"
+  }
+}

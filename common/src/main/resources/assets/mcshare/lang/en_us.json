@@ -1,0 +1,34 @@
+{
+  "button.mcshare.import": "Import World...",
+  "button.mcshare.export": "Export World...",
+
+  "button.mcshare.import.screen": "Begin Import...",
+  "button.mcshare.export.screen": "Begin Export..",
+
+  "button.mcshare.export.resourcepacks": "Include Resource Packs: %s",
+  "button.mcshare.export.datapacks": "Include Data Packs: %s",
+
+  "button.mcshare.path": "Select Path...",
+
+  "button.mcshare.play": "Play World",
+  "button.mcshare.open": "Open File Location",
+
+  "screen.mcshare.importworld": "Import World",
+  "screen.mcshare.exportworld": "Export World",
+  "screen.mcshare.importing": "Importing %s...",
+  "screen.mcshare.exporting": "Exporting %s...",
+
+  "screen.mcshare.exportworld.settings": "Export Settings",
+
+  "label.mcshare.nofile": "No file selected.",
+  "label.mcshare.selected": "Selected: %s",
+
+  "message.mcshare.drag": "Files may be dragged onto this window.",
+
+  "message.mcshare.finished.export": "Exporting Finished!",
+  "message.mcshare.finished.export.error": "Could not Export",
+
+  "message.mcshare.finished.import": "Importing Finished!",
+  "message.mcshare.finished.import.error": "Could not Import"
+
+}

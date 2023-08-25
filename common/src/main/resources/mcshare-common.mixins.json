@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.boxadactle.mcshare.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "EditWorldScreenMixin",
+    "ParentAccessor",
+    "SelectWorldScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
