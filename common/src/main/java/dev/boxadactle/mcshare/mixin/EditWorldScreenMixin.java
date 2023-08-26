@@ -22,8 +22,6 @@ public class EditWorldScreenMixin extends Screen {
         super(component);
     }
 
-    // TODO: make "make backup" folder button smaller and add export world next to it
-
     @ModifyArg(
             method = "init",
             at = @At(

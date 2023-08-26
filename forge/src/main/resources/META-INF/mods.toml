@@ -25,7 +25,7 @@ displayName="MCShare" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
 #updateJSONURL="http://myurl.me/" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="https://boxadactle.dev/projects/mcshare"
+#displayURL="http://example.com/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="icon.png" #optional
 # A text field displayed in the mod UI
@@ -42,7 +42,7 @@ authors="Boxadactle" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-A mod for, you guessed it!, sharing Minecraft worlds!
+A mod for, you guessed it, sharing Minecraft!
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.mcshare]] #optional

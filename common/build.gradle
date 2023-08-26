@@ -4,9 +4,6 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
 
     modCompileOnlyApi("dev.boxadactle.boxlib:BoxLib:${rootProject.boxlib_version}")
-
-    // very nice zip library
-    implementation("net.lingala.zip4j:zip4j:${rootProject.zip4j_version}")
 }
 
 architectury {

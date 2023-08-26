@@ -20,9 +20,6 @@ public class SelectWorldScreenMixin extends Screen {
         super(component);
     }
 
-    // TODO: make create world button smaller and put import button next to it
-    // TODO: make list lower and move the buttons to the top of the screen
-
     @ModifyArg(
             method = "init",
             at = @At(

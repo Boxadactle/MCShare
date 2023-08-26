@@ -35,4 +35,3 @@ public class FileLabel extends BConfigButton<Object> {
         }
     }
 }
-

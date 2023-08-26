@@ -5,7 +5,8 @@ import dev.boxadactle.boxlib.util.ModLogger;
 
 import java.nio.file.Path;
 
-public class MCShare {
+public class MCShare
+{
 	public static final String MOD_NAME = "MCShare";
 	public static final String MOD_ID = "mcshare";
 	public static final String MOD_VERSION = "1.0.0";

@@ -21,19 +21,10 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 
-    // very nice zip library
-    implementation("net.lingala.zip4j:zip4j:${rootProject.zip4j_version}")
     shadowCommon("net.lingala.zip4j:zip4j:${rootProject.zip4j_version}")
 
     modApi("dev.boxadactle.boxlib:BoxLib-fabric:${rootProject.boxlib_version}")
     include("dev.boxadactle.boxlib:BoxLib-fabric:${rootProject.boxlib_version}")
-}
-
-shadowJar {
-    relocate "net.lingala.zip4j", "${rootProject.maven_group}.mcshare.shadow.net.lingala.zip4j"
-
-    configurations = [project.configurations.shadowCommon]
-    classifier "shadow"
 }
 
 processResources {
@@ -45,6 +36,8 @@ processResources {
 }
 
 shadowJar {
+    relocate "net.lingala.zip4j", "${rootProject.maven_group}.shadowed.net.lingala.zip4j"
+
     configurations = [project.configurations.shadowCommon]
     archiveClassifier.set("dev-shadow")
 }

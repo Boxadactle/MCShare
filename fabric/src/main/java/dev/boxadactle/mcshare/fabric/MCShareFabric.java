@@ -1,11 +1,11 @@
 package dev.boxadactle.mcshare.fabric;
 
 import dev.boxadactle.mcshare.MCShare;
-import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.ModInitializer;
 
-public class MCShareFabric implements ClientModInitializer {
+public class MCShareFabric implements ModInitializer {
     @Override
-    public void onInitializeClient() {
+    public void onInitialize() {
         MCShare.init();
     }
 }
