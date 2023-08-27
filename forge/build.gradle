@@ -51,6 +51,12 @@ remapJar {
 
 jar {
     archiveClassifier.set("dev")
+
+    manifest {
+        attributes([
+                "MixinConfigs": "mcshare.mixins.json, mcshare-common.mixins.json"
+        ])
+    }
 }
 
 sourcesJar {

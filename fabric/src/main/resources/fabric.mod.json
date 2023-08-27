@@ -14,7 +14,6 @@
   "environment": "*",
   "entrypoints": {},
   "mixins": [
-    "mcshare.mixins.json",
     "mcshare-common.mixins.json"
   ],
   "depends": {
