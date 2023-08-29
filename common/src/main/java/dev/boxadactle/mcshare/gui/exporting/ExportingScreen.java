@@ -16,8 +16,8 @@ public class ExportingScreen extends Screen {
 
     Screen parent;
 
-    boolean isFinished = false;
-    boolean isError = false;
+    boolean isFinished;
+    boolean isError;
     String error;
 
     Button finish;
@@ -31,27 +31,6 @@ public class ExportingScreen extends Screen {
         this.parent = parent;
 
         path = filePath;
-    }
-
-    @Override
-    protected void init() {
-        int number = BConfigHelper.buttonWidth(BConfigHelper.ButtonType.SMALL);
-        finish = addRenderableWidget(Button.builder(GuiUtils.DONE, b -> onClose())
-                .bounds(width / 2 - number - 1, height / 2 + 40, number, 20)
-                .build()
-        );
-
-        openFile = addRenderableWidget(Button.builder(Component.translatable("button.mcshare.open"), this::openFile)
-                .bounds(width / 2 + 1, height / 2 + 40, number, 20)
-                .build()
-        );
-    }
-
-    @Override
-    public void tick() {
-        finish.visible = isFinished;
-        openFile.visible = isFinished;
-        openFile.active = !isError;
     }
 
     @Override
@@ -71,18 +50,35 @@ public class ExportingScreen extends Screen {
         Util.getPlatform().openFile(path.getParent().toFile());
     }
 
-    public void setFinished(boolean finished) {
-        isFinished = finished;
+    public void setFinished() {
+        isFinished = true;
+
+        activateButtons(true);
     }
 
-    public void setErrored(boolean errored, String error) {
-        isError = errored;
+    public void setErrored(String error) {
+        isError = true;
         this.error = error;
+
+        activateButtons(false);
+    }
+
+    private void activateButtons(boolean bl) {
+        int number = BConfigHelper.buttonWidth(BConfigHelper.ButtonType.SMALL);
+        addRenderableWidget(Button.builder(GuiUtils.DONE, b -> onClose())
+                .bounds(width / 2 - number - 1, height / 2 + 40, number, 20)
+                .build()
+        );
+
+        addRenderableWidget(Button.builder(Component.translatable("button.mcshare.open"), this::openFile)
+                .bounds(width / 2 + 1, height / 2 + 40, number, 20)
+                .build()
+        ).active = bl;
     }
 
     @Override
     public boolean shouldCloseOnEsc() {
-        return isFinished;
+        return isFinished || isError;
     }
 
     @Override

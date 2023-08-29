@@ -3,11 +3,14 @@ package dev.boxadactle.mcshare.gui.importing;
 import dev.boxadactle.boxlib.config.gui.BConfigHelper;
 import dev.boxadactle.boxlib.util.GuiUtils;
 import dev.boxadactle.mcshare.MCShare;
-import dev.boxadactle.mcshare.mixin.ParentAccessor;
+import dev.boxadactle.mcshare.mixin.CreateWorldParentAccessor;
+import dev.boxadactle.mcshare.mixin.SelectWorldParentAccessor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.network.chat.Component;
 
@@ -20,9 +23,6 @@ public class ImportingScreen extends Screen {
 
     String error;
 
-    Button finish;
-    Button playWorld;
-
     String worldName;
 
     protected ImportingScreen(Screen parent, String name) {
@@ -30,28 +30,6 @@ public class ImportingScreen extends Screen {
 
         this.parent = parent;
         worldName = name;
-    }
-
-    @Override
-    protected void init() {
-        int number = BConfigHelper.buttonWidth(BConfigHelper.ButtonType.SMALL);
-
-        finish = addRenderableWidget(Button.builder(GuiUtils.DONE, b -> onClose())
-                .bounds(width / 2 - number - 1, height - 40, number, 20)
-                .build()
-        );
-
-        playWorld = addRenderableWidget(Button.builder(Component.translatable("button.mcshare.play"), this::playWorld)
-                .bounds(width / 2 + 1, height - 40, number, 20)
-                .build()
-        );
-    }
-
-    @Override
-    public void tick() {
-        finish.visible = isFinished;
-        playWorld.visible = isFinished;
-        playWorld.active = !isError;
     }
 
     @Override
@@ -73,23 +51,49 @@ public class ImportingScreen extends Screen {
         this.minecraft.createWorldOpenFlows().loadLevel(this, worldName.replace(MCShare.WORLD_EXTENSION, ""));
     }
 
-    public void setFinished(boolean finished) {
-        isFinished = finished;
+    public void setFinished() {
+        isFinished = true;
+
+        activateButtons(true);
     }
 
-    public void setErrored(boolean error, String errorMessage) {
-        isError = error;
+    public void setErrored(String errorMessage) {
+        isError = true;
         this.error = errorMessage;
+
+        activateButtons(false);
+    }
+
+    private void activateButtons(boolean bl) {
+        int number = BConfigHelper.buttonWidth(BConfigHelper.ButtonType.SMALL);
+
+        addRenderableWidget(Button.builder(GuiUtils.DONE, b -> onClose())
+                .bounds(width / 2 - number - 1, height - 40, number, 20)
+                .build()
+        );
+
+        addRenderableWidget(Button.builder(Component.translatable("button.mcshare.play"), this::playWorld)
+                .bounds(width / 2 + 1, height - 40, number, 20)
+                .build()
+        ).active = bl;
     }
 
     @Override
     public boolean shouldCloseOnEsc() {
-        return isFinished;
+        return isFinished || isError;
     }
 
     @Override
     public void onClose() {
-        minecraft.setScreen(new SelectWorldScreen(((ParentAccessor)parent).getParent()));
+        if (parent instanceof SelectWorldScreen) {
+            minecraft.setScreen(new SelectWorldScreen(((SelectWorldParentAccessor) parent).getParent()));
+        } else if (parent instanceof CreateWorldScreen) {
+            minecraft.setScreen(new SelectWorldScreen(((CreateWorldParentAccessor) parent).getParent()));
+        }
+        else {
+            MCShare.LOGGER.error("Parent was not an instance of {} or {}", SelectWorldScreen.class, CreateWorldScreen.class);
+            minecraft.setScreen(new TitleScreen());
+        }
     }
 
 }

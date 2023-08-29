@@ -54,12 +54,19 @@ public class WorldExporter {
             zipFile.addFolder(options.worldPath.toFile(), parameters);
 
             MCShare.LOGGER.info("Finished!");
-            options.screen.setFinished(true);
+            options.screen.setFinished();
         } catch (Exception e) {
-            MCShare.LOGGER.error("Error occurred when exporting!");
-            MCShare.LOGGER.printStackTrace(e);
+            if (e.getMessage().toLowerCase().contains("locked a portion of the file")) {
+                MCShare.LOGGER.warn("File has been locked, either you are on windows or this is a bug!");
+                options.screen.setFinished();
+            }
 
-            options.screen.setErrored(true, e.getMessage());
+            else {
+                MCShare.LOGGER.error("Error occurred when exporting!");
+                MCShare.LOGGER.printStackTrace(e);
+
+                options.screen.setErrored(e.getMessage());
+            }
         }
     }
 

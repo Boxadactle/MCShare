@@ -45,12 +45,14 @@ public class WorldImporter {
 
             file.extractAll(p.toString());
 
-            options.screen.setFinished(true);
+            options.screen.setFinished();
+
+            MCShare.LOGGER.info("Finished!");
         } catch (Exception e) {
-            MCShare.LOGGER.error("An error occured!");
+            MCShare.LOGGER.error("An error occured while importing!");
             MCShare.LOGGER.printStackTrace(e);
 
-            options.screen.setErrored(true, e.getMessage());
+            options.screen.setErrored(e.getMessage());
         }
     }
 

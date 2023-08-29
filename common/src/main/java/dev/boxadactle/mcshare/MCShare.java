@@ -2,6 +2,14 @@ package dev.boxadactle.mcshare;
 
 import dev.boxadactle.boxlib.util.ClientUtils;
 import dev.boxadactle.boxlib.util.ModLogger;
+import dev.boxadactle.boxlib.util.function.EmptyMethod;
+import dev.boxadactle.mcshare.gui.importing.WorldImportScreen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.tabs.GridLayoutTab;
+import net.minecraft.client.gui.components.tabs.Tab;
+import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 import java.nio.file.Path;
 
@@ -26,5 +34,24 @@ public class MCShare
 
 	public static Path getWorldFolder() {
 		return Path.of(ClientUtils.getClient().gameDirectory.getAbsolutePath(), "saves");
+	}
+
+	public static class ImportTab extends GridLayoutTab {
+
+		Screen parent;
+
+		public ImportTab(Screen parent) {
+			super(Component.translatable("screen.mcshare.importworld"));
+
+			this.parent = parent;
+
+			GridLayout.RowHelper gridlayout$rowhelper = this.layout.rowSpacing(8).createRowHelper(1);
+
+			gridlayout$rowhelper.addChild(Button.builder(Component.translatable("button.mcshare.import"), this::openImportScreen).width(210).build());
+		}
+
+		private void openImportScreen(Button b) {
+			ClientUtils.setScreen(new WorldImportScreen(parent));
+		}
 	}
 }
