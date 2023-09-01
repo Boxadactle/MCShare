@@ -21,7 +21,7 @@ Exporting your Minecraft world using MCShare is a straightforward process that e
 
 4. **Select a Path:** On the Export Options screen, you can specify the destination path for the exported world. Choose a folder location on your computer where you want to save the exported world file.
 
-5. **Export Your World:** Once you've configured the export settings and selected a path, click the "Export" button on the Export Options screen. The WorldExportImport Mod will package your world into a convenient zip file and save it to the specified location.
+5. **Export Your World:** Once you've configured the export settings and selected a path, click the "Export" button on the Export Options screen. MCShare will package your world into a convenient file and save it to the specified location.
 
 That's it! Your Minecraft world is now exported and ready for sharing, backup, or any other use you have in mind!
 
