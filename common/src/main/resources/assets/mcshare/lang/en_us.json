@@ -1,34 +1,36 @@
 {
   "button.mcshare.import": "Import World...",
   "button.mcshare.export": "Export World...",
-
   "button.mcshare.import.screen": "Begin Import...",
   "button.mcshare.export.screen": "Begin Export..",
-
   "button.mcshare.export.resourcepacks": "Include Resource Packs: %s",
   "button.mcshare.export.datapacks": "Include Data Packs: %s",
-
   "button.mcshare.path": "Select Path...",
-
   "button.mcshare.play": "Play World",
   "button.mcshare.open": "Open File Location",
 
   "screen.mcshare.importworld": "Import World",
   "screen.mcshare.exportworld": "Export World",
-  "screen.mcshare.importing": "Importing %s...",
+  "screen.mcshare.importing": "Importing World...",
   "screen.mcshare.exporting": "Exporting %s...",
-
   "screen.mcshare.exportworld.settings": "Export Settings",
 
-  "label.mcshare.nofile": "No file selected.",
-  "label.mcshare.selected": "Selected: %s",
+  "label.mcshare.dragging": "Files can be dragged onto this window.",
+  "label.mcshare.password": "Password (leave blank for no password):",
+  "label.mcshare.canceled": "Process canceled by user",
 
   "message.mcshare.drag": "Files may be dragged onto this window.",
-
+  "message.mcshare.error.console": "An error occurred. Please check the console for full details.",
   "message.mcshare.finished.export": "Exporting Finished!",
-  "message.mcshare.finished.export.error": "Could not Export",
-
+  "message.mcshare.finished.export.error": "Could not Export World!",
   "message.mcshare.finished.import": "Importing Finished!",
-  "message.mcshare.finished.import.error": "Could not Import"
+  "message.mcshare.finished.import.error": "Could not Import World!",
+  "message.mcshare.error.newer": "This file was created with a newer version of MCShare.",
+  "message.mcshare.error.newer_game": "This file was created with a newer version of Minecraft. Minecraft may not load the world correctly.",
+  "message.mcshare.external": "This file was likely created with an external tool. MCShare may not import it correctly.",
+  "message.mcshare.anyways": "Do you want to continue anyway?",
+  "message.mcshare.open": "Opening Imported World...",
+  "message.mcshare.open.error": "Could not open the imported world.",
+  "message.mcshare.open.error.2": "The imported world could not be found in the world list!"
 
 }
