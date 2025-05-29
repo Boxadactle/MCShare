@@ -1,7 +1,7 @@
 package dev.boxadactle.mcshare.mixin;
 
 import dev.boxadactle.mcshare.MCShare;
-import dev.boxadactle.mcshare.gui.importing.WorldImportScreen;
+import dev.boxadactle.mcshare.gui.WorldImportScreen;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
