@@ -35,9 +35,13 @@ public class WorldImportScreen extends BOptionScreen {
     String password = null;
 
     public WorldImportScreen(Screen parent) {
+        this(parent, MCShare.getDesktop());
+    }
+
+    public WorldImportScreen(Screen parent, Path path) {
         super(parent);
 
-        path = MCShare.getDesktop();
+        this.path = path;
     }
 
     @Override
@@ -170,8 +174,9 @@ public class WorldImportScreen extends BOptionScreen {
             // find new folder by checking if the world name exists in the worldFiles list
             for (String file : worldFolder.toFile().list((dir, name1) -> dir.isDirectory())) {
                 if (!worldFiles.contains(file)) {
-                    minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("message.mcshare.open")));
-                    this.minecraft.createWorldOpenFlows().loadLevel(this, worldName.replace(Metadata.WORLD_EXTENSION, ""));
+                    this.minecraft.createWorldOpenFlows().checkForBackupAndLoad(file, () ->
+                            minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("message.mcshare.open")))
+                    );
                     break;
                 }
             }

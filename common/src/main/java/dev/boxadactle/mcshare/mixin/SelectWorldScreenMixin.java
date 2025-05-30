@@ -1,6 +1,7 @@
 package dev.boxadactle.mcshare.mixin;
 
 import dev.boxadactle.mcshare.MCShare;
+import dev.boxadactle.mcshare.Metadata;
 import dev.boxadactle.mcshare.gui.WorldImportScreen;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -13,6 +14,9 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.nio.file.Path;
+import java.util.List;
+
 @Mixin(SelectWorldScreen.class)
 public class SelectWorldScreenMixin extends Screen {
 
@@ -20,27 +24,25 @@ public class SelectWorldScreenMixin extends Screen {
         super(component);
     }
 
-    @ModifyArg(
-            method = "init",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screens/worldselection/WorldSelectionList;<init>(Lnet/minecraft/client/gui/screens/worldselection/SelectWorldScreen;Lnet/minecraft/client/Minecraft;IIIIILjava/lang/String;Lnet/minecraft/client/gui/screens/worldselection/WorldSelectionList;)V",
-                    ordinal = 0
-            ),
-            index = 4
-    )
-    private int makeListLower1(int i) {
-        return i + MCShare.LIST_SHIFT;
-    }
+//    @ModifyArg(
+//            method = "init",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/minecraft/client/gui/screens/worldselection/WorldSelectionList;<init>(Lnet/minecraft/client/gui/screens/worldselection/SelectWorldScreen;Lnet/minecraft/client/Minecraft;IIIILjava/lang/String;Lnet/minecraft/client/gui/screens/worldselection/WorldSelectionList;)V"
+//            ),
+//            index = 3
+//    )
+//    private int makeListLower1(int i) {
+//        return i + MCShare.LIST_SHIFT;
+//    }
 
     @ModifyArg(
             method = "init",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screens/worldselection/WorldSelectionList;<init>(Lnet/minecraft/client/gui/screens/worldselection/SelectWorldScreen;Lnet/minecraft/client/Minecraft;IIIIILjava/lang/String;Lnet/minecraft/client/gui/screens/worldselection/WorldSelectionList;)V",
-                    ordinal = 0
+                    target = "Lnet/minecraft/client/gui/screens/worldselection/WorldSelectionList;<init>(Lnet/minecraft/client/gui/screens/worldselection/SelectWorldScreen;Lnet/minecraft/client/Minecraft;IIIILjava/lang/String;Lnet/minecraft/client/gui/screens/worldselection/WorldSelectionList;)V"
             ),
-            index = 5
+            index = 4
     )
 
     private int makeListLower2(int i) {
@@ -82,4 +84,15 @@ public class SelectWorldScreenMixin extends Screen {
         ).bounds(width / 2 + MCShare.BUTTONS_SIZE / 2 + MCShare.BUTTON_PADDING, 48, MCShare.BUTTONS_SIZE, 20).build());
     }
 
+    public void onFilesDrop(List<Path> list) {
+        Path p = list.get(0);
+
+        MCShare.LOGGER.info("Dropped file: " + p);
+
+        if (p.toString().endsWith(Metadata.WORLD_EXTENSION) || p.toString().endsWith(".zip")) {
+            minecraft.setScreen(new WorldImportScreen(this, p));
+        } else {
+            MCShare.LOGGER.warn("Dropped file is not a valid world: " + p);
+        }
+    }
 }

@@ -2,6 +2,8 @@ package dev.boxadactle.mcshare.mixin;
 
 import dev.boxadactle.mcshare.gui.WorldExportScreen;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.layouts.LayoutElement;
+import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.worldselection.EditWorldScreen;
 import net.minecraft.network.chat.Component;
@@ -23,26 +25,27 @@ public class EditWorldScreenMixin extends Screen {
     }
 
     @ModifyArg(
-            method = "init",
+            method = "<init>",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/components/Button$Builder;bounds(IIII)Lnet/minecraft/client/gui/components/Button$Builder;",
-                    ordinal = 3
-            ),
-            index = 2
+                    target = "Lnet/minecraft/client/gui/layouts/LinearLayout;addChild(Lnet/minecraft/client/gui/layouts/LayoutElement;)Lnet/minecraft/client/gui/layouts/LayoutElement;",
+                    ordinal = 6
+            )
     )
-    private int changeBackupButtonWidth(int i) {
-        return i / 2 - 2;
-    }
+    private LayoutElement addButtons(LayoutElement layoutElement) {
+        Button b = (Button) layoutElement;
+        b.setWidth(98);
 
-    @Inject(
-            method = "init",
-            at = @At("RETURN")
-    )
-    private void addButton(CallbackInfo ci) {
-        addRenderableWidget(Button.builder(
+        Button export = Button.builder(
                 Component.translatable("button.mcshare.export"),
-                b -> minecraft.setScreen(new WorldExportScreen(this, levelAccess))
-        ).bounds(width / 2 + 2, this.height / 4 + 48 + 5, 200 / 2 - 2, 20).build());
+                bu -> minecraft.setScreen(new WorldExportScreen(this, levelAccess))
+        ).width(98).build();
+
+        LinearLayout layout = LinearLayout.horizontal().spacing(4);
+
+        layout.addChild(b);
+        layout.addChild(export);
+
+        return layout;
     }
 }
