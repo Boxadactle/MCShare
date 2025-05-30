@@ -8,6 +8,11 @@ import java.util.function.Consumer;
 public class PathField extends BOptionTextField<Path> {
     public PathField(Path value, Consumer<Path> function) {
         super(value, function);
+
+        setMaxLength(512);
+        currentValue = value;
+
+        insertText(from(value));
     }
 
     public void valid() {
