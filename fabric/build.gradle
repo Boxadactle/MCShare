@@ -60,12 +60,11 @@ shadowJar {
 remapJar {
     input.set shadowJar.archiveFile
 }
-
 unifiedPublishing {
     project {
         displayName = "[Fabric ${rootProject.minecraft_version}] v$rootProject.mod_version"
         version = "$rootProject.version-fabric"
-        changelog = new File(rootProject.rootDir, rootProject.changelog_file).text
+        changelog = "A changelog can be found here: https://github.com/Boxadactle/DebugKeybind/releases/tag/$rootProject.mod_version"
         releaseType = rootProject.release_type
         gameVersions = Arrays.asList(rootProject.game_versions.split(","))
         gameLoaders = [ "fabric", "quilt" ]
@@ -90,7 +89,7 @@ unifiedPublishing {
         if (modrinthToken != null) {
             modrinth {
                 token = modrinthToken
-                id = "3mW8PdUo"
+                id = rootProject.project_id_modrinth
                 version = "${rootProject.mod_version}-fabric"
             }
         }
