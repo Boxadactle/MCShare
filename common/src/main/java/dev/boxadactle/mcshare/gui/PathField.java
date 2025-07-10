@@ -10,8 +10,6 @@ public class PathField extends BOptionTextField<Path> {
         super(value, function);
 
         setMaxLength(512);
-        currentValue = value;
-
         insertText(from(value));
     }
 
@@ -34,8 +32,13 @@ public class PathField extends BOptionTextField<Path> {
         }
     }
 
+    boolean delta = false;
     @Override
     public String from(Path input) {
+        if (!delta) {
+            delta = true;
+            return "";
+        }
         return input.toString();
     }
 }

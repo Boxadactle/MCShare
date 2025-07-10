@@ -26,8 +26,9 @@ subprojects {
     }
 
     repositories {
-        maven { url = "https://maven.boxadactle.dev/" }
+        maven { url = "https://maven.boxadactle.dev/releases" }
         maven { url = "https://maven.terraformersmc.com/releases/" }
+        mavenCentral()
     }
 
     dependencies {
@@ -41,12 +42,12 @@ subprojects {
         // If you remove this line, sources will not be generated.
         withSourcesJar()
 
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     tasks.withType(JavaCompile).configureEach {
-        it.options.release = 17
+        it.options.release = 21
     }
 
     // Configure Maven publishing.
@@ -72,10 +73,10 @@ githubRelease {
     owner = "Boxadactle"
     repo = "MCShare"
     tagName = "$project.version"
-    targetCommitish = "latest"
+    targetCommitish = "dev"
     releaseName = "MCShare $project.version"
     generateReleaseNotes = true
-    body = """"MCShare $project.version for Minecraft $project.minecraft_version"
+    body = """MCShare $project.version for Minecraft $project.minecraft_version
 
 ${new File(rootProject.rootDir, project.changelog_file).text}
 """

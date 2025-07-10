@@ -24,18 +24,6 @@ public class SelectWorldScreenMixin extends Screen {
         super(component);
     }
 
-//    @ModifyArg(
-//            method = "init",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/minecraft/client/gui/screens/worldselection/WorldSelectionList;<init>(Lnet/minecraft/client/gui/screens/worldselection/SelectWorldScreen;Lnet/minecraft/client/Minecraft;IIIILjava/lang/String;Lnet/minecraft/client/gui/screens/worldselection/WorldSelectionList;)V"
-//            ),
-//            index = 3
-//    )
-//    private int makeListLower1(int i) {
-//        return i + MCShare.LIST_SHIFT;
-//    }
-
     @ModifyArg(
             method = "init",
             at = @At(

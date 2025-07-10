@@ -1,0 +1,37 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+license = "MIT"
+
+[[mods]]
+modId = "mcshare"
+version = "${version}"
+displayName = "MCShare"
+authors = "Boxadactle"
+description='''
+A mod for, you guessed it, sharing Minecraft!
+'''
+logoFile = "icon.png"
+
+[[dependencies.mcshare]]
+modId = "neoforge"
+type = "required"
+versionRange = "[20,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.mcshare]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.20.5,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.mcshare]]
+modId = "boxlib"
+type = "required"
+versionRange = "[13.0.0,14.0.0)"
+ordering = "NONE"
+side = "BOTH"
+
+[[mixins]]
+   config = "mcshare-common.mixins.json"

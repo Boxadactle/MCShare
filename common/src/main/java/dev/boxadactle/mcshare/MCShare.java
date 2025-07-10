@@ -22,7 +22,7 @@ import java.util.UUID;
 public class MCShare {
 	public static final String MOD_NAME = "MCShare";
 	public static final String MOD_ID = "mcshare";
-	public static final String MOD_VERSION = "1.0.0";
+	public static final String MOD_VERSION = "3.0.0";
 	public static final String VERSION_STRING = MOD_NAME + " v" + MOD_VERSION;
 
 	public static final ModLogger LOGGER = new ModLogger(MOD_NAME);

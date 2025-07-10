@@ -42,6 +42,8 @@ public class WorldExportScreen extends BOptionScreen {
         this.levelAccess = levelAccess;
 
         path = MCShare.getDesktop();
+
+        MCShare.LOGGER.info(path);
     }
 
     @Override

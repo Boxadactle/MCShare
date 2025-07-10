@@ -14,7 +14,7 @@ import dev.boxadactle.mcshare.mixin.CreateWorldParentAccessor;
 import dev.boxadactle.mcshare.mixin.SelectWorldParentAccessor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
+import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
@@ -22,7 +22,6 @@ import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.network.chat.Component;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 
 public class WorldImportScreen extends BOptionScreen {
@@ -174,8 +173,8 @@ public class WorldImportScreen extends BOptionScreen {
             // find new folder by checking if the world name exists in the worldFiles list
             for (String file : worldFolder.toFile().list((dir, name1) -> dir.isDirectory())) {
                 if (!worldFiles.contains(file)) {
-                    this.minecraft.createWorldOpenFlows().checkForBackupAndLoad(file, () ->
-                            minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("message.mcshare.open")))
+                    this.minecraft.createWorldOpenFlows().openWorld(file, () ->
+                            minecraft.forceSetScreen(new GenericMessageScreen(Component.translatable("message.mcshare.open")))
                     );
                     break;
                 }

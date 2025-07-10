@@ -19,6 +19,6 @@
   "depends": {
     "fabricloader": "*",
     "minecraft": ">=1.20",
-    "boxlib": "12.*"
+    "boxlib": "13.*"
   }
 }
