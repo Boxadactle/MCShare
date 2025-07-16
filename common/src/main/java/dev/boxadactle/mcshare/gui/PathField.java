@@ -1,6 +1,7 @@
 package dev.boxadactle.mcshare.gui;
 
 import dev.boxadactle.boxlib.gui.config.BOptionTextField;
+import dev.boxadactle.mcshare.MCShare;
 
 import java.nio.file.Path;
 import java.util.function.Consumer;
@@ -10,7 +11,10 @@ public class PathField extends BOptionTextField<Path> {
         super(value, function);
 
         setMaxLength(512);
-        insertText(from(value));
+        setValue(from(value));
+        currentValue = value;
+
+        MCShare.LOGGER.info("PathField initialized with value: " + getValue());
     }
 
     public void valid() {
@@ -32,13 +36,8 @@ public class PathField extends BOptionTextField<Path> {
         }
     }
 
-    boolean delta = false;
     @Override
     public String from(Path input) {
-        if (!delta) {
-            delta = true;
-            return "";
-        }
         return input.toString();
     }
 }

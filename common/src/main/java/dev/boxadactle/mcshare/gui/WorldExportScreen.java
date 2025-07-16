@@ -29,7 +29,9 @@ public class WorldExportScreen extends BOptionScreen {
     Button export;
 
     Path path;
+    String filename;
     PathField field;
+    BStringField field2;
 
     boolean datapacks = false;
     boolean resourcepacks = false;
@@ -75,7 +77,11 @@ public class WorldExportScreen extends BOptionScreen {
 
         field = new PathField(path, v -> path = v);
         field.setMaxLength(512);
-        addConfigLine(field, new BLabel(Component.literal(Metadata.WORLD_EXTENSION)));
+        addConfigLine(field);
+
+        field2 = new BStringField(levelAccess.getLevelId(), s -> filename = s + Metadata.WORLD_EXTENSION);
+        field2.setMaxLength(64);
+        addConfigLine(field2, new BLabel(Component.literal(Metadata.WORLD_EXTENSION)));
 
         space();
 
@@ -103,8 +109,10 @@ public class WorldExportScreen extends BOptionScreen {
     private void startExport(Button ignored) {
         ClientUtils.getClient().forceSetScreen(new ExportingScreen(parent, levelAccess, path));
 
+        Path p = path.resolve(filename);
+
         WorldExporter.ExportOptions options = new WorldExporter.ExportOptions()
-                .setExportPath(path)
+                .setExportPath(p)
                 .setWorldPath(levelAccess.getLevelPath(LevelResource.ROOT))
                 .setIncludeDatapacks(datapacks)
                 .setIncludeResourcepacks(resourcepacks)

@@ -1,24 +1,10 @@
 plugins {
-    id 'com.github.johnrengelman.shadow'
+    id 'multiloader-loader'
+    id 'fabric-loom'
     id "me.shedaniel.unified-publishing"
 }
 
-architectury {
-    platformSetupLoomIde()
-    fabric()
-}
-
 configurations {
-    common {
-        canBeResolved = true
-        canBeConsumed = false
-    }
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentFabric.extendsFrom common
-
-    // Files in this configuration will be bundled into your mod using the Shadow plugin.
-    // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
     shadowBundle {
         canBeResolved = true
         canBeConsumed = false
@@ -26,21 +12,43 @@ configurations {
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
-
-    // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.layered {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${parchment_minecraft}:${parchment_version}@zip")
+    }
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
     modImplementation("dev.boxadactle:Boxlib-fabric:${rootProject.boxlib_version}") { transitive = false }
 
-    modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}") { transitive = false }
-
-    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
-    shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
-
-    implementation "net.lingala.zip4j:zip4j:$rootProject.zip4j_version"
-    include "net.lingala.zip4j:zip4j:$rootProject.zip4j_version"
+    include (implementation "net.lingala.zip4j:zip4j:$rootProject.zip4j_version")
 }
+
+loom {
+    def aw = project(':common').file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) {
+        accessWidenerPath.set(aw)
+    }
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+    runs {
+        client {
+            client()
+            setConfigName('Fabric Client')
+            ideConfigGenerated(true)
+            runDir('runs/client')
+        }
+        server {
+            server()
+            setConfigName('Fabric Server')
+            ideConfigGenerated(true)
+            runDir('runs/server')
+        }
+    }
+}
+
 
 processResources {
     inputs.property 'version', project.version
@@ -50,20 +58,32 @@ processResources {
     }
 }
 
-shadowJar {
-    configurations = [project.configurations.shadowBundle]
-    archiveClassifier = 'dev-shadow'
-}
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
 
-remapJar {
-    input.set shadowJar.archiveFile
+// someone pls make this work like its suppposed to
+tasks.named('processResources') {
+    doLast {
+        def jsonFile = file("$buildDir/resources/main/mcshare.mixins.json")
+
+        if (jsonFile.exists()) {
+            def jsonSlurper = new JsonSlurper()
+            def data = jsonSlurper.parse(jsonFile)
+
+            data["refmap"] = "${mod_id}.refmap.json"
+
+            jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(data))
+        } else {
+            println "mixin config not found at ${jsonFile}"
+        }
+    }
 }
 
 unifiedPublishing {
     project {
-        displayName = "[Fabric ${rootProject.minecraft_version}] v$rootProject.mod_version"
+        displayName = "[Fabric ${rootProject.minecraft_version}] v$rootProject.version"
         version = "$rootProject.version-fabric"
-        changelog = "A changelog can be found here: https://github.com/Boxadactle/DebugKeybind/releases/tag/$rootProject.mod_version"
+        changelog = "A changelog can be found here: https://github.com/Boxadactle/MCShare/releases/tag/$rootProject.version"
         releaseType = rootProject.release_type
         gameVersions = Arrays.asList(rootProject.game_versions.split(","))
         gameLoaders = [ "fabric", "quilt" ]
@@ -89,7 +109,7 @@ unifiedPublishing {
             modrinth {
                 token = modrinthToken
                 id = rootProject.project_id_modrinth
-                version = "${rootProject.mod_version}-fabric"
+                version = "${rootProject.version}-fabric"
             }
         }
     }

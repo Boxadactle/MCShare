@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "id": "mcshare",
+  "id": "${mod_id}",
   "version": "${version}",
 
-  "name": "MCShare",
-  "description": "A mod for, you guessed it, sharing Minecraft!",
-  "authors": [ "Boxadactle" ],
+  "name": "${mod_name}",
+  "description": "${description}",
+  "authors": [ "${mod_author}" ],
   "contact": {},
 
-  "license": "MIT",
+  "license": "${license}",
   "icon": "icon.png",
 
   "environment": "*",
   "entrypoints": {},
   "mixins": [
-    "mcshare-common.mixins.json"
+    "mcshare.mixins.json"
   ],
   "depends": {
     "fabricloader": "*",
-    "minecraft": ">=1.20",
-    "boxlib": "13.*"
+    "minecraft": "${minecraft_version_range_fabric}",
+    "boxlib": "${boxlib_version_range_fabric}"
   }
 }

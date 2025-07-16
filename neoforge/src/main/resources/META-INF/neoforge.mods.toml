@@ -3,35 +3,33 @@ loaderVersion = "[2,)"
 license = "MIT"
 
 [[mods]]
-modId = "mcshare"
+modId = "${mod_id}"
 version = "${version}"
-displayName = "MCShare"
-authors = "Boxadactle"
-description='''
-A mod for, you guessed it, sharing Minecraft!
-'''
+displayName = "${mod_name}"
+authors = "${mod_author}"
+description='''${description}'''
 logoFile = "icon.png"
 
-[[dependencies.mcshare]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
-versionRange = "[20,)"
+versionRange = "[2,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.mcshare]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.20.5,)"
+versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.mcshare]]
+[[dependencies.${mod_id}]]
 modId = "boxlib"
 type = "required"
-versionRange = "[13.0.0,14.0.0)"
+versionRange = "${boxlib_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
 [[mixins]]
-   config = "mcshare-common.mixins.json"
+   config = "mcshare.mixins.json"
