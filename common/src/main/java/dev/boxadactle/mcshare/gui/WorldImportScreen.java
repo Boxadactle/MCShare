@@ -14,6 +14,7 @@ import dev.boxadactle.mcshare.mixin.CreateWorldParentAccessor;
 import dev.boxadactle.mcshare.mixin.SelectWorldParentAccessor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
@@ -38,32 +39,24 @@ public class WorldImportScreen extends BOptionScreen {
     }
 
     public WorldImportScreen(Screen parent, Path path) {
-        super(parent);
+        super(parent, Component.empty());
 
         this.path = path;
     }
 
     @Override
-    protected Component getName() {
-        return Component.empty();
-    }
-
-    @Override
-    protected void initFooter(int i, int i1) {
-        int number = getButtonWidth(ButtonType.SMALL);
-        confirm = addRenderableWidget(Button.builder(Component.translatable("button.mcshare.import.screen"), this::startImport)
-                .bounds(width / 2 - number - 1, height - 25, number, 20)
+    protected void initFooter(LinearLayout layout) {
+        layout.addChild(Button.builder(GuiUtils.CANCEL, b -> onClose())
                 .build()
         );
 
-        addRenderableWidget(Button.builder(GuiUtils.CANCEL, b -> onClose())
-                .bounds(width / 2 + 1, height - 25, number, 20)
+        confirm = layout.addChild(Button.builder(Component.translatable("button.mcshare.import.screen"), this::startImport)
                 .build()
         );
     }
 
     @Override
-    protected void initConfigButtons() {
+    protected void addOptions() {
 
         addConfigLine(new BCenteredLabel(Component.translatable("screen.mcshare.importworld")));
         addConfigLine(new BCenteredLabel(Component.translatable("label.mcshare.dragging")));

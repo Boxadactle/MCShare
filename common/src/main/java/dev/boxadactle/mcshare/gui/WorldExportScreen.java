@@ -15,6 +15,7 @@ import dev.boxadactle.mcshare.Metadata;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.storage.LevelResource;
@@ -39,7 +40,7 @@ public class WorldExportScreen extends BOptionScreen {
     String password = null;
 
     public WorldExportScreen(Screen parent, LevelStorageSource.LevelStorageAccess levelAccess) {
-        super(parent);
+        super(parent, Component.empty());
 
         this.levelAccess = levelAccess;
 
@@ -49,27 +50,16 @@ public class WorldExportScreen extends BOptionScreen {
     }
 
     @Override
-    protected Component getName() {
-        return Component.empty();
-    }
+    protected void initFooter(LinearLayout layout) {
+        layout.addChild(createCancelButton(b -> onClose()));
 
-    @Override
-    protected void initFooter(int i, int i1) {
-        int number = getButtonWidth(ButtonType.SMALL);
-
-        export = addRenderableWidget(Button.builder(Component.translatable("button.mcshare.export.screen"), this::startExport)
-                .bounds(width / 2 - number - 1, height - 25, number, 20)
-                .build()
-        );
-
-        addRenderableWidget(Button.builder(GuiUtils.CANCEL, b -> onClose())
-                .bounds(width / 2 + 1, height - 25, number, 20)
+        export = layout.addChild(Button.builder(Component.translatable("button.mcshare.export.screen"), this::startExport)
                 .build()
         );
     }
 
     @Override
-    protected void initConfigButtons() {
+    protected void addOptions() {
 
         addConfigLine(new BCenteredLabel(Component.translatable("screen.mcshare.exportworld")));
 
